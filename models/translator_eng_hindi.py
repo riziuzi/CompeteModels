@@ -14,117 +14,126 @@ import io
 import time
 # http://storage.googleapis.com/download.tensorflow.org/data/spa-eng.zip -> dataset of spa-eng
 profiling_log_dir = "./profile_logs"
-tf.profiler.experimental.start(logdir=profiling_log_dir)
-print(tf.config.list_physical_devices('GPU'))
+tf.profiler.experimental.start(logdir=profiling_log_dir)        # I am not able to run this, as for analyzing GPU, CUPTI is needed -> which could not be found for some reasons (cuptiSubscribe: error 15: CUPTI_ERROR_NOT_INITIALIZED) -> will try to upgrade once I remove dependency on tensorflow-addon (which is holding all teh versions down)
+# disabling GPU 
+
+
 class NMTDataset:
-    def __init__(self, problem_type='eng-hindi'):
-        self.problem_type = problem_type
-        self.inp_lang_tokenizer = None
-        self.targ_lang_tokenizer = None
-    
+  def __init__(self, problem_type='eng-hindi',threshold=None):
+      self.problem_type = problem_type
+      self.inp_lang_tokenizer = None
+      self.targ_lang_tokenizer = None
+      self.threshold = threshold
 
-    def unicode_to_ascii(self, s):
-        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
+  def unicode_to_ascii(self, s):
+      return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
 
-    ## Step 1 and Step 2 
-    def preprocess_sentence_hindi(self, w):
-        # Create a space between a word and the punctuation following it
-        # eg: "वह लड़का है." => "वह लड़का है ."
-        # Reference: https://stackoverflow.com/questions/3645931/python-padding-punctuation-with-white-spaces-keeping-punctuation
-        # Replace everything with space except (a-z, A-Z, ".", "?", "!", ",", "।", Hindi characters)
-        # Reference: https://stackoverflow.com/questions/76658990/regex-expression-to-validate-only-hindi-devnagri-letters-in-python
-        w = re.sub(r"[^?.!,"+hindi_characters_pattern+"]", " ", w)        # discarded english terms also, if needed (Ideally should not be given)
-        w = re.sub(r"([?.!,।])", r" \1 ", w)
-        w = re.sub(r'[" "]+', " ", w)
-        w = w.strip()
+  ## Step 1 and Step 2 
+  def preprocess_sentence_hindi(self, w):
+      # Create a space between a word and the punctuation following it
+      # eg: "वह लड़का है." => "वह लड़का है ."
+      # Reference: https://stackoverflow.com/questions/3645931/python-padding-punctuation-with-white-spaces-keeping-punctuation
+      # Replace everything with space except (a-z, A-Z, ".", "?", "!", ",", "।", Hindi characters)
+      # Reference: https://stackoverflow.com/questions/76658990/regex-expression-to-validate-only-hindi-devnagri-letters-in-python
+      w = re.sub(r"[^?.!,"+hindi_characters_pattern+"]", " ", w)        # discarded english terms also, if needed (Ideally should not be given)
+      w = re.sub(r"([?.!,।])", r" \1 ", w)
+      w = re.sub(r'[" "]+', " ", w)
+      w = w.strip()
 
-        # Add a start and an end token to the sentence
-        # so that the model knows when to start and stop predicting.
-        w = '<start> ' + w + ' <end>'
-        return w
-    def preprocess_sentence_english(self, w):
-        w = self.unicode_to_ascii(w.lower().strip())
+      # Add a start and an end token to the sentence
+      # so that the model knows when to start and stop predicting.
+      w = '<start> ' + w + ' <end>'
+      return w
+  def preprocess_sentence_english(self, w):
+      w = self.unicode_to_ascii(w.lower().strip())
 
-        # creating a space between a word and the punctuation following it
-        # eg: "he is a boy." => "he is a boy ."
-        # Reference:- https://stackoverflow.com/questions/3645931/python-padding-punctuation-with-white-spaces-keeping-punctuation
-        w = re.sub(r"([?.!,¿])", r" \1 ", w)
-        w = re.sub(r'[" "]+', " ", w)
+      # creating a space between a word and the punctuation following it
+      # eg: "he is a boy." => "he is a boy ."
+      # Reference:- https://stackoverflow.com/questions/3645931/python-padding-punctuation-with-white-spaces-keeping-punctuation
+      w = re.sub(r"([?.!,¿])", r" \1 ", w)
+      w = re.sub(r'[" "]+', " ", w)
 
-        # replacing everything with space except (a-z, A-Z, ".", "?", "!", ",")
-        w = re.sub(r"[^a-zA-Z?.!,¿]+", " ", w)
-        w = w.strip()
+      # replacing everything with space except (a-z, A-Z, ".", "?", "!", ",")
+      w = re.sub(r"[^a-zA-Z?.!,¿]+", " ", w)
+      w = w.strip()
 
-        # adding a start and an end token to the sentence
-        # so that the model know when to start and stop predicting.
-        w = '<start> ' + w + ' <end>'
-        return w
-    
-    def create_dataset(self, path, num_examples):
-        # path : path to spa-eng.txt file
-        # num_examples : Limit the total number of training example for faster training (set num_examples = len(lines) to use full data)
-        lines = io.open(path, encoding='UTF-8').read().strip().split('\n')
-        # lines contains each of the lines as it is in .txt ... like 0->'Go.\tVe.', 1->'Go.\tVete.'...
-        word_pairs = [[self.preprocess_sentence_english(l.split('\t')[0]),self.preprocess_sentence_hindi(l.split('\t')[1])]  for l in lines[:num_examples]]
-        # word_pairs = [['<start> go . <end>', '<start> ve . <end>'],['<start> go . <end>', '<start> vete . <end>'],...]
-        return zip(*word_pairs)
+      # adding a start and an end token to the sentence
+      # so that the model know when to start and stop predicting.
+      w = '<start> ' + w + ' <end>'
+      return w
+  
+  def create_dataset(self, path, num_examples):
+      # path : path to spa-eng.txt file
+      # num_examples : Limit the total number of training example for faster training (set num_examples = len(lines) to use full data)
+      lines = io.open(path, encoding='UTF-8').read().strip().split('\n')
+      # lines contains each of the lines as it is in .txt ... like 0->'Go.\tVe.', 1->'Go.\tVete.'...
+      word_pairs = []
+      print("WordPairing started")
+      for l in lines[:num_examples]:
+          splited = l.split('\t')
+          hindi = self.preprocess_sentence_hindi(splited[1])
+          english = self.preprocess_sentence_english(splited[0])
+          if (not self.threshold) or (len(hindi.split(' '))<=self.threshold+2  and len(english.split(' '))<=self.threshold+2 + 10):       # this extra 10 is some extra space for input
+              word_pairs.append([english, hindi])
+      # word_pairs = [['<start> go . <end>', '<start> ve . <end>'],['<start> go . <end>', '<start> vete . <end>'],...]
+      print("WordPairs returned")
+      return zip(*word_pairs)
 
-    # Step 3 and Step 4
-    def tokenize(self, lang):
-        # lang = list of sentences in a language
-        
-        print(len(lang), "example sentence: {}".format(lang[-1]))
-        print(len(lang), "example sentence: {}".format(lang[4]))
-        lang_tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='', oov_token='<OOV>')
-        lang_tokenizer.fit_on_texts(lang)
+  # Step 3 and Step 4
+  def tokenize(self, lang):
+      # lang = list of sentences in a language
+      
+      print(len(lang), "example sentence: {}".format(lang[-1]))
+      print(len(lang), "example sentence: {}".format(lang[4]))
+      lang_tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='', oov_token='<OOV>')
+      lang_tokenizer.fit_on_texts(lang)
 
-        ## tf.keras.preprocessing.text.Tokenizer.texts_to_sequences converts string (w1, w2, w3, ......, wn) 
-        ## to a list of correspoding integer ids of words (id_w1, id_w2, id_w3, ...., id_wn)
-        tensor = lang_tokenizer.texts_to_sequences(lang) 
+      ## tf.keras.preprocessing.text.Tokenizer.texts_to_sequences converts string (w1, w2, w3, ......, wn) 
+      ## to a list of correspoding integer ids of words (id_w1, id_w2, id_w3, ...., id_wn)
+      tensor = lang_tokenizer.texts_to_sequences(lang) 
 
-        ## tf.keras.preprocessing.sequence.pad_sequences takes argument a list of integer id sequences 
-        ## and pads the sequences to match the longest sequences in the given input
-        tensor = tf.keras.preprocessing.sequence.pad_sequences(tensor, padding='post')
+      ## tf.keras.preprocessing.sequence.pad_sequences takes argument a list of integer id sequences 
+      ## and pads the sequences to match the longest sequences in the given input
+      tensor = tf.keras.preprocessing.sequence.pad_sequences(tensor, padding='post')
 
-        return tensor, lang_tokenizer
+      return tensor, lang_tokenizer
 
-    def load_dataset(self, path, num_examples=None):
-        # creating cleaned input, output pairs
-        # targ_lang, inp_lang = self.create_dataset(path, num_examples)             # changing the target and input if necessary
-        inp_lang, targ_lang  = self.create_dataset(path, num_examples)
-        # targ_lang = ('<start> go . <end>','<start> go . <end>',...)
-        # inp_lang = ('<start> ve . <end>','<start> vete . <end>',...)
-        input_tensor, inp_lang_tokenizer = self.tokenize(inp_lang)
-        target_tensor, targ_lang_tokenizer = self.tokenize(targ_lang)
-        # target_tensor = [array([ 2, 37,  4,  3,  0,  0,  0,  0,  0,  0,  0]),array([ 2, 37,  4,  3,  0,  0,  0,  0,  0,  0,  0]),...]
-        # input_tensor = [array([ 2, 136,  4,  3,  0,  0,  0,  0,  0,  0,  0]),array([ 2, 294,  4,  3,  0,  0,  0,  0,  0,  0,  0]),...]
-        return input_tensor, target_tensor, inp_lang_tokenizer, targ_lang_tokenizer
+  def load_dataset(self, path, num_examples=None):
+      # creating cleaned input, output pairs
+      # targ_lang, inp_lang = self.create_dataset(path, num_examples)             # changing the target and input if necessary
+      inp_lang, targ_lang  = self.create_dataset(path, num_examples)
+      # targ_lang = ('<start> go . <end>','<start> go . <end>',...)
+      # inp_lang = ('<start> ve . <end>','<start> vete . <end>',...)
+      input_tensor, inp_lang_tokenizer = self.tokenize(inp_lang)
+      target_tensor, targ_lang_tokenizer = self.tokenize(targ_lang)
+      # target_tensor = [array([ 2, 37,  4,  3,  0,  0,  0,  0,  0,  0,  0]),array([ 2, 37,  4,  3,  0,  0,  0,  0,  0,  0,  0]),...]
+      # input_tensor = [array([ 2, 136,  4,  3,  0,  0,  0,  0,  0,  0,  0]),array([ 2, 294,  4,  3,  0,  0,  0,  0,  0,  0,  0]),...]
+      return input_tensor, target_tensor, inp_lang_tokenizer, targ_lang_tokenizer
 
-    def call(self, num_examples, BUFFER_SIZE, BATCH_SIZE):
-        file_path = "./en-hi.txt"
-        input_tensor, target_tensor, self.inp_lang_tokenizer, self.targ_lang_tokenizer = self.load_dataset(file_path, num_examples)
-        # target_tensor = [array([ 2, 37,  4,  3,  0,  0,  0,  0,  0,  0,  0]),array([ 2, 37,  4,  3,  0,  0,  0,  0,  0,  0,  0]),...]
-        # input_tensor = [array([ 2, 136,  4,  3,  0,  0,  0,  0,  0,  0,  0]),array([ 2, 294,  4,  3,  0,  0,  0,  0,  0,  0,  0]),...]
-        input_tensor_train, input_tensor_val, target_tensor_train, target_tensor_val = train_test_split(input_tensor, target_tensor, test_size=0.2)
+  def call(self, num_examples, BUFFER_SIZE, BATCH_SIZE):
+      file_path = "data/translation/en-hi.txt"
+      input_tensor, target_tensor, self.inp_lang_tokenizer, self.targ_lang_tokenizer = self.load_dataset(file_path, num_examples)
+      # target_tensor = [array([ 2, 37,  4,  3,  0,  0,  0,  0,  0,  0,  0]),array([ 2, 37,  4,  3,  0,  0,  0,  0,  0,  0,  0]),...]
+      # input_tensor = [array([ 2, 136,  4,  3,  0,  0,  0,  0,  0,  0,  0]),array([ 2, 294,  4,  3,  0,  0,  0,  0,  0,  0,  0]),...]
+      input_tensor_train, input_tensor_val, target_tensor_train, target_tensor_val = train_test_split(input_tensor, target_tensor, test_size=0.2)
 
-        train_dataset = tf.data.Dataset.from_tensor_slices((input_tensor_train, target_tensor_train)) # -> contains list of 64 trainingXY tensors -> each batch's each tensor is pair of tensors -> both containing tokenized words
-        train_dataset = train_dataset.shuffle(BUFFER_SIZE).batch(BATCH_SIZE, drop_remainder=True)
+      train_dataset = tf.data.Dataset.from_tensor_slices((input_tensor_train, target_tensor_train)) # -> contains list of 64 trainingXY tensors -> each batch's each tensor is pair of tensors -> both containing tokenized words
+      train_dataset = train_dataset.shuffle(BUFFER_SIZE).batch(BATCH_SIZE, drop_remainder=True)
 
-        val_dataset = tf.data.Dataset.from_tensor_slices((input_tensor_val, target_tensor_val))
-        val_dataset = val_dataset.batch(BATCH_SIZE, drop_remainder=True)
+      val_dataset = tf.data.Dataset.from_tensor_slices((input_tensor_val, target_tensor_val))
+      val_dataset = val_dataset.batch(BATCH_SIZE, drop_remainder=True)
 
-        return train_dataset, val_dataset, self.inp_lang_tokenizer, self.targ_lang_tokenizer
-    
+      return train_dataset, val_dataset, self.inp_lang_tokenizer, self.targ_lang_tokenizer
 
-
-BUFFER_SIZE = 61000                     # Buffer size > number of samples
-BATCH_SIZE = 1
+num_examples = 1659084//10                    # 1659084 <- total data size (25% taken)
+BUFFER_SIZE = num_examples + 1                     # Buffer size > number of samples
+BATCH_SIZE = 256
 # Let's limit the #training examples for faster training
-# num_examples = 1659084//4                    # 1659084 <- total data size (25% taken)
-num_examples = 10
-
-dataset_creator = NMTDataset('eng-hindi')
+profiling_log_dir = "./profile_logs"
+# tf.profiler.experimental.start(logdir=profiling_log_dir)
+dataset_creator = NMTDataset('eng-hindi',threshold = 36)
 train_dataset, val_dataset, inp_lang, targ_lang = dataset_creator.call(num_examples, BUFFER_SIZE, BATCH_SIZE)
+# tf.profiler.experimental.stop(save=True)
 example_input_batch, example_target_batch = next(iter(train_dataset))
 vocab_inp_size = len(inp_lang.word_index)+1
 vocab_tar_size = len(targ_lang.word_index)+1
@@ -270,9 +279,10 @@ def train_step(inp, targ, enc_hidden):
   optimizer.apply_gradients(zip(gradients, variables))
 
   return loss
-
+gpu_device = '/gpu:0'
 EPOCHS = 10
 try:
+  with tf.device(gpu_device):
     for epoch in range(EPOCHS):
         start = time.time()
         enc_hidden = encoder.initialize_hidden_state()
