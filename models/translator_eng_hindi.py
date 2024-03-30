@@ -15,8 +15,8 @@ import time
 # http://storage.googleapis.com/download.tensorflow.org/data/spa-eng.zip -> dataset of spa-eng
 profiling_log_dir = "./profile_logs"
 tf.profiler.experimental.start(logdir=profiling_log_dir)        # I am not able to run this, as for analyzing GPU, CUPTI is needed -> which could not be found for some reasons (cuptiSubscribe: error 15: CUPTI_ERROR_NOT_INITIALIZED) -> will try to upgrade once I remove dependency on tensorflow-addon (which is holding all teh versions down)
-# disabling GPU 
-
+print(tf.config.list_physical_devices('GPU'))
+os.environ["TF_GPU_ALLOCATOR"] = "cuda_malloc_async"            # Earlier fragmentation was the problem (small holes left in poorly allocated memory bar) -> Async makes efficient
 
 class NMTDataset:
   def __init__(self, problem_type='eng-hindi',threshold=None):
@@ -125,9 +125,10 @@ class NMTDataset:
 
       return train_dataset, val_dataset, self.inp_lang_tokenizer, self.targ_lang_tokenizer
 
-num_examples = 1659084//10                    # 1659084 <- total data size (25% taken)
+EPOCHS = 20                                   # estimated time 3.43 hrs by my resources
+num_examples = 1659084//4                    # 1659084 <- total data size (25% taken)
 BUFFER_SIZE = num_examples + 1                     # Buffer size > number of samples
-BATCH_SIZE = 256
+BATCH_SIZE = 64
 # Let's limit the #training examples for faster training
 profiling_log_dir = "./profile_logs"
 # tf.profiler.experimental.start(logdir=profiling_log_dir)
@@ -279,8 +280,10 @@ def train_step(inp, targ, enc_hidden):
   optimizer.apply_gradients(zip(gradients, variables))
 
   return loss
+
+print(checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir)))              # Not checked if weights are restored (of previous 1 EPOCH) or not
+print("\n\n\n")
 gpu_device = '/gpu:0'
-EPOCHS = 10
 try:
   with tf.device(gpu_device):
     for epoch in range(EPOCHS):
@@ -295,8 +298,8 @@ try:
                                                         batch,
                                                         batch_loss.numpy()))
         # saving (checkpoint) the model every 2 epochs
-        if (epoch + 1) % 2 == 0:
-            checkpoint.save(file_prefix = checkpoint_prefix)
+        # if (epoch + 1) % 2 == 0:
+        checkpoint.save(file_prefix = checkpoint_prefix)
 
         print('Epoch {} Loss {:.4f}'.format(epoch + 1,
                                             total_loss / steps_per_epoch))
@@ -305,4 +308,5 @@ try:
 except Exception as e:
     print("An error occurred during training:", e)    
 
+checkpoint.save(file_prefix = checkpoint_prefix)
 tf.profiler.experimental.stop(save=True)
