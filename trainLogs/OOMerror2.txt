@@ -1,0 +1,175 @@
+(py310) PS C:\Users\rishi\Desktop\DocumentSearching\models> python .\translator_eng_hindi.py
+C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\tensorflow_addons\utils\tfa_eol_msg.py:23: UserWarning:
+
+TensorFlow Addons (TFA) has ended development and introduction of new features.
+TFA has entered a minimal maintenance and release mode until a planned end of life in May 2024.
+Please modify downstream libraries to take dependencies from other repositories in our TensorFlow community (e.g. Keras, Keras-CV, and Keras-NLP).
+
+For more information see: https://github.com/tensorflow/addons/issues/2807
+
+  warnings.warn(
+2024-03-29 21:59:18.911117: I tensorflow/core/profiler/lib/profiler_session.cc:101] Profiler session initializing.
+2024-03-29 21:59:18.911645: I tensorflow/core/profiler/lib/profiler_session.cc:116] Profiler session started.
+2024-03-29 21:59:18.997496: I tensorflow/core/profiler/backends/gpu/cupti_tracer.cc:1664] Profiler found 1 GPUs
+[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+WordPairing started
+WordPairs returned
+356948 example sentence: <start> so on that day their pleas shall be of no avail , nor will they be allowed to make amends . <end>
+356948 example sentence: <start> a list of plugins that are disabled by default <end>
+356948 example sentence: <start> तो उस दिन सरकश लोगों को न उनकी उज्र माअज़ेरत कुछ काम आएगी और न उनकी सुनवाई होगी <end>
+356948 example sentence: <start> उन प्लग इनों की सूची जिन्हें डिफोल्ट रूप से निष्क्रिय किया गया है <end>
+2024-03-29 22:00:15.481240: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-03-29 22:00:17.049196: I tensorflow/core/common_runtime/gpu/gpu_process_state.cc:222] Using CUDA malloc Async allocator for GPU: 0
+2024-03-29 22:00:17.050728: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1616] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 2126 MB memory:  -> device: 0, name: NVIDIA GeForce GTX 1650, pci bus id: 0000:01:00.0, compute capability: 7.5
+Encoding:  Tensor("encoder/embedding/embedding_lookup/Identity_1:0", shape=(64, 48, 256), dtype=float32)
+Encoding:  Tensor("encoder/embedding/embedding_lookup/Identity_1:0", shape=(64, 48, 256), dtype=float32)
+2024-03-29 22:00:33.252916: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:690] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA GeForce GTX 1650" frequency: 1515 num_cores: 14 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 1048576 shared_memory_size_per_multiprocessor: 65536 memory_size: 2229744436 bandwidth: 192032000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2024-03-29 22:00:36.848576: I tensorflow/stream_executor/cuda/cuda_dnn.cc:384] Loaded cuDNN version 8100
+Epoch 1 Batch 0 Loss 2.6307
+Epoch 1 Batch 100 Loss 1.7138
+Epoch 1 Batch 200 Loss 1.9090
+Epoch 1 Batch 300 Loss 1.5096
+Epoch 1 Batch 400 Loss 1.1154
+Epoch 1 Batch 500 Loss 1.3618
+Epoch 1 Batch 600 Loss 1.2691
+Epoch 1 Batch 700 Loss 1.5725
+Epoch 1 Batch 800 Loss 1.3758
+Epoch 1 Batch 900 Loss 1.4460
+Epoch 1 Batch 1000 Loss 1.1184
+Epoch 1 Batch 1100 Loss 1.1585
+Epoch 1 Batch 1200 Loss 1.3301
+Epoch 1 Batch 1300 Loss 0.9551
+Epoch 1 Batch 1400 Loss 0.9597
+Epoch 1 Batch 1500 Loss 1.0330
+Epoch 1 Batch 1600 Loss 1.1767
+Epoch 1 Batch 1700 Loss 0.9388
+Epoch 1 Batch 1800 Loss 0.7800
+Epoch 1 Batch 1900 Loss 0.7915
+Epoch 1 Batch 2000 Loss 0.9081
+Epoch 1 Batch 2100 Loss 0.9053
+Epoch 1 Batch 2200 Loss 0.8805
+Epoch 1 Batch 2300 Loss 0.7696
+Epoch 1 Batch 2400 Loss 0.8448
+Epoch 1 Batch 2500 Loss 0.9593
+Epoch 1 Batch 2600 Loss 0.7022
+Epoch 1 Batch 2700 Loss 0.6203
+Epoch 1 Batch 2800 Loss 0.7225
+Epoch 1 Batch 2900 Loss 0.8664
+Epoch 1 Batch 3000 Loss 0.6663
+Epoch 1 Batch 3100 Loss 0.6157
+Epoch 1 Batch 3200 Loss 0.7572
+Epoch 1 Batch 3300 Loss 0.6041
+Epoch 1 Batch 3400 Loss 0.7160
+Epoch 1 Batch 3500 Loss 0.4960
+Epoch 1 Batch 3600 Loss 0.7296
+Epoch 1 Batch 3700 Loss 0.5611
+Epoch 1 Batch 3800 Loss 0.4960
+Epoch 1 Batch 3900 Loss 0.5527
+Epoch 1 Batch 4000 Loss 0.4759
+Epoch 1 Batch 4100 Loss 0.3929
+Epoch 1 Batch 4200 Loss 0.5590
+Epoch 1 Batch 4300 Loss 0.5840
+Epoch 1 Batch 4400 Loss 0.4059
+Epoch 1 Loss 0.6277
+Time taken for 1 epoch 8002.362676620483 sec
+
+Epoch 2 Batch 0 Loss 0.5508
+Epoch 2 Batch 100 Loss 0.3595
+Epoch 2 Batch 200 Loss 0.3593
+Epoch 2 Batch 300 Loss 0.3621
+Epoch 2 Batch 400 Loss 0.3648
+Epoch 2 Batch 500 Loss 0.6119
+Epoch 2 Batch 600 Loss 0.5005
+2024-03-30 00:44:29.820367: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:288] gpu_async_0 cuMemAllocAsync failed to allocate 300574976 bytes: CUDA error: out of memory (CUDA_ERROR_OUT_OF_MEMORY)
+ Reported by CUDA: Free memory/Total memory: 925315892/4294639616
+2024-03-30 00:44:29.830104: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:293] Stats: Limit:
+2229744436
+InUse:                      1831338788
+MaxInUse:                   2832740287
+NumAllocs:                    12051759
+MaxAllocSize:                300574976
+Reserved:                            0
+PeakReserved:                        0
+LargestFreeBlock:                    0
+
+2024-03-30 00:44:29.835095: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:56] Histogram of current allocation: (allocation_size_in_bytes, nb_allocation_of_that_sizes), ...;
+2024-03-30 00:44:29.836512: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 1, 12
+2024-03-30 00:44:29.836732: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 4, 43
+2024-03-30 00:44:29.836827: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 8, 8
+2024-03-30 00:44:29.836923: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 64, 1
+2024-03-30 00:44:29.836990: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 1028, 1
+2024-03-30 00:44:29.837056: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 1060, 1
+2024-03-30 00:44:29.837146: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 1136, 1
+2024-03-30 00:44:29.837240: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 9472, 4
+2024-03-30 00:44:29.837347: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 12288, 42
+2024-03-30 00:44:29.837412: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 16384, 8
+2024-03-30 00:44:29.837508: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 65536, 75
+2024-03-30 00:44:29.837615: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 126932, 4
+2024-03-30 00:44:29.837744: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 262144, 302
+2024-03-30 00:44:29.837868: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 327680, 37
+2024-03-30 00:44:29.837971: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 524288, 37
+2024-03-30 00:44:29.838086: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 3145728, 1
+2024-03-30 00:44:29.838209: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 4194304, 6
+2024-03-30 00:44:29.838352: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 8123648, 33
+2024-03-30 00:44:29.838489: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 8388608, 4
+2024-03-30 00:44:29.838589: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 12582912, 4
+2024-03-30 00:44:29.838661: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 16777216, 7
+2024-03-30 00:44:29.838791: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 20971520, 4
+2024-03-30 00:44:29.838916: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 21004288, 1
+2024-03-30 00:44:29.839044: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 32494592, 3
+2024-03-30 00:44:29.839154: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 35189760, 3
+2024-03-30 00:44:29.839263: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 62914560, 1
+2024-03-30 00:44:29.839394: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 129978368, 4
+2024-03-30 00:44:29.839538: E tensorflow/core/common_runtime/gpu/gpu_cudamallocasync_allocator.cc:59] 300574976, 1
+2024-03-30 00:44:29.842290: W tensorflow/core/framework/op_kernel.cc:1780] OP_REQUIRES failed at transpose_op.cc:183 : RESOURCE_EXHAUSTED: OOM when allocating tensor with shape[64,37,31733] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator gpu_async_0
+An error occurred during training: Graph execution error:
+
+Detected at node 'decoder/basic_decoder/decoder/transpose_1' defined at (most recent call last):
+    File "C:\Users\rishi\Desktop\DocumentSearching\models\translator_eng_hindi.py", line 291, in <module>
+      batch_loss = train_step(inp, targ, enc_hidden)
+    File "C:\Users\rishi\Desktop\DocumentSearching\models\translator_eng_hindi.py", line 274, in train_step
+      pred = decoder(dec_input, decoder_initial_state)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\keras\utils\traceback_utils.py", line 65, in error_handler
+      return fn(*args, **kwargs)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\keras\engine\training.py", line 557, in __call__
+      return super().__call__(*args, **kwargs)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\keras\utils\traceback_utils.py", line 65, in error_handler
+      return fn(*args, **kwargs)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\keras\engine\base_layer.py", line 1097, in __call__
+      outputs = call_fn(inputs, *args, **kwargs)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\keras\utils\traceback_utils.py", line 96, in error_handler
+      return fn(*args, **kwargs)
+    File "C:\Users\rishi\Desktop\DocumentSearching\models\translator_eng_hindi.py", line 234, in call
+      outputs, _, _ = self.decoder(x, initial_state=initial_state, sequence_length=self.batch_sz*[max_length_output-1])
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\keras\utils\traceback_utils.py", line 65, in error_handler
+      return fn(*args, **kwargs)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\keras\engine\base_layer.py", line 1097, in __call__
+      outputs = call_fn(inputs, *args, **kwargs)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\keras\utils\traceback_utils.py", line 96, in error_handler
+      return fn(*args, **kwargs)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\tensorflow_addons\seq2seq\decoder.py", line 171, in call
+      decoder_init_kwargs=init_kwargs,
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\typeguard\__init__.py", line 262, in wrapper
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\tensorflow_addons\seq2seq\decoder.py", line 546, in dynamic_decode
+      if not output_time_major:
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\tensorflow_addons\seq2seq\decoder.py", line 554, in dynamic_decode
+      final_outputs = tf.nest.map_structure(_transpose_batch_time, final_outputs)
+    File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\tensorflow_addons\seq2seq\decoder.py", line 581, in _transpose_batch_time
+      return tf.transpose(tensor, perm)
+Node: 'decoder/basic_decoder/decoder/transpose_1'
+OOM when allocating tensor with shape[64,37,31733] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator gpu_async_0
+         [[{{node decoder/basic_decoder/decoder/transpose_1}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info. This isn't available when running in Eager mode.
+ [Op:__inference_train_step_4343]
+2024-03-30 00:44:51.283564: I tensorflow/core/profiler/lib/profiler_session.cc:67] Profiler session collecting data.
+2024-03-30 00:46:44.574859: I tensorflow/core/profiler/lib/profiler_session.cc:128] Profiler session tear down.
+2024-03-30 00:50:26.134770: I tensorflow/core/profiler/backends/gpu/cupti_tracer.cc:1798] CUPTI activity buffer flushed
+Traceback (most recent call last):
+  File "C:\Users\rishi\Desktop\DocumentSearching\models\translator_eng_hindi.py", line 308, in <module>
+    tf.profiler.experimental.stop(save=True)
+  File "C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\tensorflow\python\profiler\profiler_v2.py", line 149, in stop
+    _profiler.export_to_tb()
+MemoryError: bad allocation
+(py310) PS C:\Users\rishi\Desktop\DocumentSearching\models>
+

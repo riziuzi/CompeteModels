@@ -1,0 +1,78 @@
+(py310) PS C:\Users\rishi\Desktop\DocumentSearching\models> python .\translator_eng_hindi.py
+C:\Users\rishi\anaconda3\envs\py310\lib\site-packages\tensorflow_addons\utils\tfa_eol_msg.py:23: UserWarning:
+
+TensorFlow Addons (TFA) has ended development and introduction of new features.
+TFA has entered a minimal maintenance and release mode until a planned end of life in May 2024.
+Please modify downstream libraries to take dependencies from other repositories in our TensorFlow community (e.g. Keras, Keras-CV, and Keras-NLP).
+
+For more information see: https://github.com/tensorflow/addons/issues/2807
+
+  warnings.warn(
+2024-03-30 01:01:22.104640: I tensorflow/core/profiler/lib/profiler_session.cc:101] Profiler session initializing.
+2024-03-30 01:01:22.105087: I tensorflow/core/profiler/lib/profiler_session.cc:116] Profiler session started.
+2024-03-30 01:01:22.131803: I tensorflow/core/profiler/backends/gpu/cupti_tracer.cc:1664] Profiler found 1 GPUs
+[PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+WordPairing started
+WordPairs returned
+356948 example sentence: <start> so on that day their pleas shall be of no avail , nor will they be allowed to make amends . <end>
+356948 example sentence: <start> a list of plugins that are disabled by default <end>
+356948 example sentence: <start> तो उस दिन सरकश लोगों को न उनकी उज्र माअज़ेरत कुछ काम आएगी और न उनकी सुनवाई होगी <end>
+356948 example sentence: <start> उन प्लग इनों की सूची जिन्हें डिफोल्ट रूप से निष्क्रिय किया गया है <end>
+2024-03-30 01:02:08.235375: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-03-30 01:02:09.835569: I tensorflow/core/common_runtime/gpu/gpu_process_state.cc:222] Using CUDA malloc Async allocator for GPU: 0
+2024-03-30 01:02:09.837127: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1616] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 2126 MB memory:  -> device: 0, name: NVIDIA GeForce GTX 1650, pci bus id: 0000:01:00.0, compute capability: 7.5
+Encoding:  Tensor("encoder/embedding/embedding_lookup/Identity_1:0", shape=(64, 48, 256), dtype=float32)
+Encoding:  Tensor("encoder/embedding/embedding_lookup/Identity_1:0", shape=(64, 48, 256), dtype=float32)
+2024-03-30 01:02:23.568537: W tensorflow/core/grappler/costs/op_level_cost_estimator.cc:690] Error in PredictCost() for the op: op: "Softmax" attr { key: "T" value { type: DT_FLOAT } } inputs { dtype: DT_FLOAT shape { unknown_rank: true } } device { type: "GPU" vendor: "NVIDIA" model: "NVIDIA GeForce GTX 1650" frequency: 1515 num_cores: 14 environment { key: "architecture" value: "7.5" } environment { key: "cuda" value: "11020" } environment { key: "cudnn" value: "8100" } num_registers: 65536 l1_cache_size: 24576 l2_cache_size: 1048576 shared_memory_size_per_multiprocessor: 65536 memory_size: 2229744436 bandwidth: 192032000 } outputs { dtype: DT_FLOAT shape { unknown_rank: true } }
+2024-03-30 01:02:25.546511: I tensorflow/stream_executor/cuda/cuda_dnn.cc:384] Loaded cuDNN version 8100
+Epoch 1 Batch 0 Loss 2.2805
+Epoch 1 Batch 100 Loss 1.9405
+Epoch 1 Batch 200 Loss 1.8321
+Epoch 1 Batch 300 Loss 1.7262
+Epoch 1 Batch 400 Loss 1.2821
+Epoch 1 Batch 500 Loss 1.5196
+Epoch 1 Batch 600 Loss 1.4862
+Epoch 1 Batch 700 Loss 1.0227
+Epoch 1 Batch 800 Loss 1.0383
+Epoch 1 Batch 900 Loss 1.2833
+Epoch 1 Batch 1000 Loss 1.1755
+Epoch 1 Batch 1100 Loss 1.3697
+Epoch 1 Batch 1200 Loss 1.3538
+Epoch 1 Batch 1300 Loss 1.2319
+Epoch 1 Batch 1400 Loss 0.8918
+Epoch 1 Batch 1500 Loss 1.1865
+Epoch 1 Batch 1600 Loss 0.9400
+Epoch 1 Batch 1700 Loss 1.2412
+Epoch 1 Batch 1800 Loss 1.0425
+Epoch 1 Batch 1900 Loss 1.1868
+Epoch 1 Batch 2000 Loss 1.0533
+Epoch 1 Batch 2100 Loss 1.0568
+Epoch 1 Batch 2200 Loss 2.6008
+Epoch 1 Batch 2300 Loss 1.4414
+Epoch 1 Batch 2400 Loss 1.0187
+Epoch 1 Batch 2500 Loss 1.1492
+Epoch 1 Batch 2600 Loss 1.1092
+Epoch 1 Batch 2700 Loss 1.0229
+Epoch 1 Batch 2800 Loss 0.9878
+Epoch 1 Batch 2900 Loss 1.1440
+Epoch 1 Batch 3000 Loss 1.1055
+Epoch 1 Batch 3100 Loss 0.6982
+Epoch 1 Batch 3200 Loss 0.9530
+Epoch 1 Batch 3300 Loss 0.8639
+Epoch 1 Batch 3400 Loss 1.0446
+Epoch 1 Batch 3500 Loss 0.9372
+Epoch 1 Batch 3600 Loss 0.6553
+Epoch 1 Batch 3700 Loss 0.8236
+Epoch 1 Batch 3800 Loss 0.8561
+Epoch 1 Batch 3900 Loss 0.7383
+Epoch 1 Batch 4000 Loss 0.7676
+Epoch 1 Batch 4100 Loss 0.7510
+Epoch 1 Batch 4200 Loss 0.9395
+Epoch 1 Batch 4300 Loss 0.7082
+Epoch 1 Batch 4400 Loss 0.8357
+2024-03-30 02:42:03.601905: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 129978368 exceeds 10% of free system memory.
+2024-03-30 02:42:05.909395: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 129978368 exceeds 10% of free system memory.
+2024-03-30 02:42:09.611417: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 129978368 exceeds 10% of free system memory.
+Epoch 1 Loss 0.7637
+Time taken for 1 epoch 6013.7724595069885 sec
