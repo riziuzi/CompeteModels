@@ -1,6 +1,8 @@
+# CompeteModel : Models used in the project [MindScape India (Compete)](https://github.com/riziuzi/compete)
+This repository contains all the models currently under development and does not handle the hosting of these models. (refer to the [Compete](https://github.com/riziuzi/compete) repository)
 ## Setup
 
-preferred setup [video](https://www.youtube.com/watch?v=VE5OiQSfPLg)  (Note: for running tensorflow-addons used in the models, tensorflow<=2.14.0 is required)
+preferred setup [video](https://www.youtube.com/watch?v=VE5OiQSfPLg) (Note: for running tensorflow-addons used in the models, tensorflow<=2.14.0 is required)
 
 ```
 Tenserflow GPU(2.14) installation on Windows 11 through WSL2 ( VS Code installation and Jupiter LAB installation included)
