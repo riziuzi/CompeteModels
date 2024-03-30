@@ -7,3 +7,4 @@ logs
 dump
 tflogs
 .vscode
+seq2seq
