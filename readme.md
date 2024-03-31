@@ -269,11 +269,13 @@ The provided code snippet includes a comprehensive memory analysis for the decod
 </details>
 
 
-## Model Used (incomplete description)
-Encoder -> LSTM
-Decoder -> LSTM
-
 ## References (incomplete description)
+
+
+## Keywords
+
+| **Encoder** | **tf.keras.Model** | **Embedding Layer** | **LSTM Layer** | **Vocabulary Size** | **Embedding Dimension** | **LSTM** | **enc_units** | **Return Sequences** | **Return State** | **Recurrent Initializer** | **Functionalities** | **Constructor** | **Forward Pass** | **Initialize Hidden State** | **Hyperparameters** | **Memory Analysis** | **Trainable Weights** | **Total Model Memory** | **Total Trainable Parameters** | **Memory Usage** | **Attention Mechanism** | **Dense Layer** | **Bahdanau** | **Luong** | **Model Summary** |
+
 
 
 Note: all the incomplete description will be completed in future, if you want to contribute, please do the PR
